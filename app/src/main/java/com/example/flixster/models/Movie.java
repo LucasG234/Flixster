@@ -20,7 +20,7 @@ public class Movie {
 
     public static List<Movie> fromJSONArray(JSONArray jsonArray) throws JSONException {
         List<Movie> movies = new ArrayList<>();
-        for(int i = 0; i < jsonArray.length(); i++) {
+        for (int i = 0; i < jsonArray.length(); i++) {
             movies.add(new Movie(jsonArray.getJSONObject(i)));
         }
 
