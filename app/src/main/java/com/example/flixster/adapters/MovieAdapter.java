@@ -1,6 +1,7 @@
 package com.example.flixster.adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +31,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        Log.d("MovieAdapter", "onCreateViewHolder");
         LayoutInflater inflater = LayoutInflater.from(context);
         View movieView = inflater.inflate(R.layout.item_movie, parent, false);
         return new ViewHolder(movieView);
@@ -38,6 +40,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
     // Populate data into the view, through the ViewHolder
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        Log.d("MovieAdapter", "onBindViewHolder " + position);
         // Get the movie at the position
         Movie movie = movies.get(position);
         // Bind the movie data into the ViewHolder
