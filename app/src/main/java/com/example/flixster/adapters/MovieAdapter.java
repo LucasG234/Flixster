@@ -18,6 +18,8 @@ import com.example.flixster.models.Movie;
 
 import java.util.List;
 
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
+
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> {
 
     Context context;
@@ -72,14 +74,22 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
             tvTitle.setText(movie.getTitle());
             tvOverview.setText(movie.getOverview());
 
+            RoundedCornersTransformation transformation = new RoundedCornersTransformation(30, 10);
             // Select image depending on orientation
-            String imageUrl;
             if (context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                imageUrl = movie.getBackdropPath();
+                Glide.with(context)
+                        .load(movie.getBackdropPath())
+                        .placeholder(R.drawable.backdrop_placeholder)
+                        .transform(transformation)
+                        .into(ivPoster);
             } else {
-                imageUrl = movie.getPosterPath();
+                Glide.with(context)
+                        .load(movie.getPosterPath())
+                        .placeholder(R.drawable.poster_placeholder)
+                        .transform(transformation)
+                        .into(ivPoster);
             }
-            Glide.with(context).load(imageUrl).into(ivPoster);
+
         }
     }
 }
