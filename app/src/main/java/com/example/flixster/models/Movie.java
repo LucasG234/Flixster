@@ -3,21 +3,30 @@ package com.example.flixster.models;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.parceler.Parcel;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Parcel
 public class Movie {
-    private String mPosterPath;
-    private String mBackdropPath;
-    private String mTitle;
-    private String mOverview;
+
+    // Fields cannot be private to be captured by Parceler
+    String posterPath;
+    String backdropPath;
+    String title;
+    String overview;
+    Double voteAverage;
+
+    // Default constructor needed for Parceler
+    public Movie() { }
 
     public Movie(JSONObject jsonObject) throws JSONException {
-        mPosterPath = jsonObject.getString("poster_path");
-        mBackdropPath = jsonObject.getString("backdrop_path");
-        mTitle = jsonObject.getString("title");
-        mOverview = jsonObject.getString("overview");
+        posterPath = jsonObject.getString("poster_path");
+        backdropPath = jsonObject.getString("backdrop_path");
+        title = jsonObject.getString("title");
+        overview = jsonObject.getString("overview");
+        voteAverage = jsonObject.getDouble("vote_average");
     }
 
     public static List<Movie> fromJSONArray(JSONArray jsonArray) throws JSONException {
@@ -30,18 +39,22 @@ public class Movie {
     }
 
     public String getPosterPath() {
-        return String.format("https://image.tmdb.org/t/p/w342/%s", mPosterPath);
+        return String.format("https://image.tmdb.org/t/p/w342/%s", posterPath);
     }
 
     public String getBackdropPath() {
-        return String.format("https://image.tmdb.org/t/p/w342/%s", mBackdropPath);
+        return String.format("https://image.tmdb.org/t/p/w342/%s", backdropPath);
     }
 
     public String getTitle() {
-        return mTitle;
+        return title;
     }
 
     public String getOverview() {
-        return mOverview;
+        return overview;
+    }
+
+    public Double getVoteAverage() {
+        return voteAverage;
     }
 }

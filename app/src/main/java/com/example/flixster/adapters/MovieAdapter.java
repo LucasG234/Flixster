@@ -1,6 +1,7 @@
 package com.example.flixster.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,8 +14,11 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.flixster.MovieDetailsActivity;
 import com.example.flixster.R;
 import com.example.flixster.models.Movie;
+
+import org.parceler.Parcels;
 
 import java.util.List;
 
@@ -57,7 +61,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
     }
 
     // Each instance represents one item in the list
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private TextView mTitleText;
         private TextView mOverviewText;
@@ -68,6 +72,8 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
             mTitleText = itemView.findViewById(R.id.tvTitle);
             mOverviewText = itemView.findViewById(R.id.tvOverview);
             mPosterImage = itemView.findViewById(R.id.ivPoster);
+
+            itemView.setOnClickListener(this);
         }
 
         public void bind(Movie movie) {
@@ -91,6 +97,23 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
                     .placeholder(placeHolderId)
                     .transform(transformation)
                     .into(mPosterImage);
+        }
+
+        @Override
+        public void onClick(View view) {
+            // Get position and ensure validity
+            int position = getAdapterPosition();
+
+            if(position != RecyclerView.NO_POSITION) {
+                Movie movie = mMovies.get(position);
+
+                // Create an intent for a MovieDetailsActivity
+                Intent intent = new Intent(mContext, MovieDetailsActivity.class);
+                // Serialize the movie using parceler, with its short name as the key
+                intent.putExtra(Movie.class.getSimpleName(), Parcels.wrap(movie));
+                mContext.startActivity(intent);
+            }
+
         }
     }
 }
