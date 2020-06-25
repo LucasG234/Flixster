@@ -26,17 +26,17 @@ public class MainActivity extends AppCompatActivity {
     public static final String NOW_PLAYING_URL = "https://api.themoviedb.org/3/movie/now_playing?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed";
     public static final String TAG = "MainActivity";
 
-    List<Movie> movies;
+    private List<Movie> mMovies;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         RecyclerView rvMovies = findViewById(R.id.rvMovies);
-        movies = new ArrayList<>();
+        mMovies = new ArrayList<>();
 
         // Create an adapter
-        final MovieAdapter movieAdapter = new MovieAdapter(this, movies);
+        final MovieAdapter movieAdapter = new MovieAdapter(this, mMovies);
         // Set the adapter on the RecyclerView
         rvMovies.setAdapter(movieAdapter);
         // Set a LayoutManager on the RecyclerView
@@ -51,10 +51,10 @@ public class MainActivity extends AppCompatActivity {
                 JSONObject jsonObject = json.jsonObject;
                 try {
                     JSONArray results = jsonObject.getJSONArray("results");
-                    Log.i(TAG, "Results: " + results.toString());
-                    movies.addAll(Movie.fromJSONArray(results));
+                    Log.d(TAG, "Results: " + results.toString());
+                    mMovies.addAll(Movie.fromJSONArray(results));
                     movieAdapter.notifyDataSetChanged();
-                    Log.i(TAG, "Movies: " + movies.size());
+                    Log.d(TAG, "Movies: " + mMovies.size());
                 } catch (JSONException e) {
                     Log.e(TAG, "JSON Exception", e);
                     e.printStackTrace();

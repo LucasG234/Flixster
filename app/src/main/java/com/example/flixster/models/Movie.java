@@ -8,16 +8,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Movie {
-    String posterPath;
-    String backdropPath;
-    String title;
-    String overview;
+    private String mPosterPath;
+    private String mBackdropPath;
+    private String mTitle;
+    private String mOverview;
 
     public Movie(JSONObject jsonObject) throws JSONException {
-        posterPath = jsonObject.getString("poster_path");
-        backdropPath = jsonObject.getString("backdrop_path");
-        title = jsonObject.getString("title");
-        overview = jsonObject.getString("overview");
+        mPosterPath = jsonObject.getString("poster_path");
+        mBackdropPath = jsonObject.getString("backdrop_path");
+        mTitle = jsonObject.getString("title");
+        mOverview = jsonObject.getString("overview");
     }
 
     public static List<Movie> fromJSONArray(JSONArray jsonArray) throws JSONException {
@@ -30,18 +30,18 @@ public class Movie {
     }
 
     public String getPosterPath() {
-        return String.format("https://image.tmdb.org/t/p/w342/%s", posterPath);
+        return String.format("https://image.tmdb.org/t/p/w342/%s", mPosterPath);
     }
 
     public String getBackdropPath() {
-        return String.format("https://image.tmdb.org/t/p/w342/%s", backdropPath);
+        return String.format("https://image.tmdb.org/t/p/w342/%s", mBackdropPath);
     }
 
     public String getTitle() {
-        return title;
+        return mTitle;
     }
 
     public String getOverview() {
-        return overview;
+        return mOverview;
     }
 }

@@ -22,12 +22,12 @@ import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> {
 
-    Context context;
-    List<Movie> movies;
+    private Context mContext;
+    private List<Movie> mMovies;
 
     public MovieAdapter(Context context, List<Movie> movies) {
-        this.context = context;
-        this.movies = movies;
+        this.mContext = context;
+        this.mMovies = movies;
     }
 
     // Inflate a layout from XML and return a ViewHolder
@@ -35,7 +35,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Log.d("MovieAdapter", "onCreateViewHolder");
-        LayoutInflater inflater = LayoutInflater.from(context);
+        LayoutInflater inflater = LayoutInflater.from(mContext);
         View movieView = inflater.inflate(R.layout.item_movie, parent, false);
         return new ViewHolder(movieView);
     }
@@ -45,7 +45,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Log.d("MovieAdapter", "onBindViewHolder " + position);
         // Get the movie at the position
-        Movie movie = movies.get(position);
+        Movie movie = mMovies.get(position);
         // Bind the movie data into the ViewHolder
         holder.bind(movie);
     }
@@ -53,43 +53,44 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
     // Return the total count of the items in the list
     @Override
     public int getItemCount() {
-        return movies.size();
+        return mMovies.size();
     }
 
     // Each instance represents one item in the list
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tvTitle;
-        TextView tvOverview;
-        ImageView ivPoster;
+        private TextView mTitleText;
+        private TextView mOverviewText;
+        private ImageView mPosterImage;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            tvTitle = itemView.findViewById(R.id.tvTitle);
-            tvOverview = itemView.findViewById(R.id.tvOverview);
-            ivPoster = itemView.findViewById(R.id.ivPoster);
+            mTitleText = itemView.findViewById(R.id.tvTitle);
+            mOverviewText = itemView.findViewById(R.id.tvOverview);
+            mPosterImage = itemView.findViewById(R.id.ivPoster);
         }
 
         public void bind(Movie movie) {
-            tvTitle.setText(movie.getTitle());
-            tvOverview.setText(movie.getOverview());
+            mTitleText.setText(movie.getTitle());
+            mOverviewText.setText(movie.getOverview());
 
-            RoundedCornersTransformation transformation = new RoundedCornersTransformation(30, 10);
             // Select image depending on orientation
-            if (context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                Glide.with(context)
-                        .load(movie.getBackdropPath())
-                        .placeholder(R.drawable.backdrop_placeholder)
-                        .transform(transformation)
-                        .into(ivPoster);
+            String url;
+            int placeHolderId;
+            if (mContext.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                url = movie.getBackdropPath();
+                placeHolderId = R.drawable.backdrop_placeholder;
             } else {
-                Glide.with(context)
-                        .load(movie.getPosterPath())
-                        .placeholder(R.drawable.poster_placeholder)
-                        .transform(transformation)
-                        .into(ivPoster);
+                url = movie.getPosterPath();
+                placeHolderId = R.drawable.poster_placeholder;
             }
+            RoundedCornersTransformation transformation = new RoundedCornersTransformation(30, 10);
 
+            Glide.with(mContext)
+                    .load(url)
+                    .placeholder(placeHolderId)
+                    .transform(transformation)
+                    .into(mPosterImage);
         }
     }
 }
