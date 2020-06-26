@@ -1,5 +1,7 @@
 package com.example.flixster.models;
 
+import androidx.annotation.Nullable;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -17,6 +19,10 @@ public class Movie {
     String title;
     String overview;
     Double voteAverage;
+    Integer movieId;
+    // trailerId is loaded as needed when movie details are generated
+    @Nullable
+    String trailerId;
 
     // Default constructor needed for Parceler
     public Movie() { }
@@ -27,6 +33,8 @@ public class Movie {
         title = jsonObject.getString("title");
         overview = jsonObject.getString("overview");
         voteAverage = jsonObject.getDouble("vote_average");
+        movieId = jsonObject.getInt("id");
+        trailerId = null;
     }
 
     public static List<Movie> fromJSONArray(JSONArray jsonArray) throws JSONException {
@@ -56,5 +64,16 @@ public class Movie {
 
     public Double getVoteAverage() {
         return voteAverage;
+    }
+
+    public Integer getMovieId() {
+        return movieId;
+    }
+
+    public void setTrailerId(@Nullable String trailerId) {
+        this.trailerId = trailerId;
+    }
+    public String getTrailerId() {
+        return trailerId;
     }
 }

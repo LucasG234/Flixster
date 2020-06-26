@@ -3,6 +3,7 @@ package com.example.flixster.adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.renderscript.ScriptGroup;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.flixster.MovieDetailsActivity;
 import com.example.flixster.R;
+import com.example.flixster.databinding.ItemMovieBinding;
 import com.example.flixster.models.Movie;
 
 import org.parceler.Parcels;
@@ -39,9 +41,9 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Log.d("MovieAdapter", "onCreateViewHolder");
-        LayoutInflater inflater = LayoutInflater.from(mContext);
-        View movieView = inflater.inflate(R.layout.item_movie, parent, false);
-        return new ViewHolder(movieView);
+        ItemMovieBinding movieBinding = ItemMovieBinding.inflate(LayoutInflater.from(mContext));
+        View movieView = movieBinding.getRoot();
+        return new ViewHolder(movieView, movieBinding);
     }
 
     // Populate data into the view, through the ViewHolder
@@ -67,11 +69,11 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
         private TextView mOverviewText;
         private ImageView mPosterImage;
 
-        public ViewHolder(@NonNull View itemView) {
+        public ViewHolder(@NonNull View itemView, ItemMovieBinding itemBinding) {
             super(itemView);
-            mTitleText = itemView.findViewById(R.id.tvTitle);
-            mOverviewText = itemView.findViewById(R.id.tvOverview);
-            mPosterImage = itemView.findViewById(R.id.ivPoster);
+            mTitleText = itemBinding.tvTitle;
+            mOverviewText = itemBinding.tvOverview;
+            mPosterImage = itemBinding.ivPoster;
 
             itemView.setOnClickListener(this);
         }
@@ -108,10 +110,10 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
                 Movie movie = mMovies.get(position);
 
                 // Create an intent for a MovieDetailsActivity
-                Intent intent = new Intent(mContext, MovieDetailsActivity.class);
+                Intent detailsIntent = new Intent(mContext, MovieDetailsActivity.class);
                 // Serialize the movie using parceler, with its short name as the key
-                intent.putExtra(Movie.class.getSimpleName(), Parcels.wrap(movie));
-                mContext.startActivity(intent);
+                detailsIntent.putExtra(Movie.class.getSimpleName(), Parcels.wrap(movie));
+                mContext.startActivity(detailsIntent);
             }
 
         }

@@ -45,7 +45,8 @@ public class MainActivity extends AppCompatActivity {
         rvMovies.setLayoutManager(new LinearLayoutManager(this));
 
         AsyncHttpClient client = new AsyncHttpClient();
-        client.get(getString(R.string.movies_info_url)+getString(R.string.movies_api_key), new JsonHttpResponseHandler() {
+        String url = String.format(getString(R.string.movies_info_url), getString(R.string.movies_api_key));
+        client.get(url, new JsonHttpResponseHandler() {
 
             @Override
             public void onSuccess(int statusCode, Headers headers, JSON json) {

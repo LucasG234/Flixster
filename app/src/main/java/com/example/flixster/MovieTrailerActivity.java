@@ -6,12 +6,17 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.example.flixster.databinding.ActivityMovieTrailerBinding;
+import com.example.flixster.models.Movie;
 import com.google.android.youtube.player.YouTubeBaseActivity;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerView;
 
+import org.parceler.Parcels;
+
 public class MovieTrailerActivity extends YouTubeBaseActivity {
+
+    private static final String TAG = "MovieTrailerActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,8 +25,11 @@ public class MovieTrailerActivity extends YouTubeBaseActivity {
         ActivityMovieTrailerBinding binding = ActivityMovieTrailerBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        // temporary test video id -- TODO replace with movie trailer video id
-        final String videoId = "tKodtNFpzBA";
+        // Unwrap the movie passed in by the Intent
+        Movie movie = Parcels.unwrap(getIntent().getParcelableExtra(Movie.class.getSimpleName()));
+        Log.d(TAG, String.format("Showing details for '%s'", movie.getTitle()));
+        
+        final String videoId = movie.getTrailerId();
 
         // resolve the player view from the layout
         YouTubePlayerView playerView = binding.player;
