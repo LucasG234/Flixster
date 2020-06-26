@@ -41,9 +41,8 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Log.d("MovieAdapter", "onCreateViewHolder");
-        ItemMovieBinding movieBinding = ItemMovieBinding.inflate(LayoutInflater.from(mContext));
-        View movieView = movieBinding.getRoot();
-        return new ViewHolder(movieView, movieBinding);
+        ItemMovieBinding movieBinding = ItemMovieBinding.inflate(LayoutInflater.from(mContext), parent, false);
+        return new ViewHolder(movieBinding);
     }
 
     // Populate data into the view, through the ViewHolder
@@ -65,22 +64,18 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
     // Each instance represents one item in the list
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        private TextView mTitleText;
-        private TextView mOverviewText;
-        private ImageView mPosterImage;
+        private ItemMovieBinding mBinding;
 
-        public ViewHolder(@NonNull View itemView, ItemMovieBinding itemBinding) {
-            super(itemView);
-            mTitleText = itemBinding.tvTitle;
-            mOverviewText = itemBinding.tvOverview;
-            mPosterImage = itemBinding.ivPoster;
+        public ViewHolder(ItemMovieBinding itemBinding) {
+            super(itemBinding.getRoot());
+            mBinding = itemBinding;
 
-            itemView.setOnClickListener(this);
+            mBinding.getRoot().setOnClickListener(this);
         }
 
         public void bind(Movie movie) {
-            mTitleText.setText(movie.getTitle());
-            mOverviewText.setText(movie.getOverview());
+            mBinding.tvTitle.setText(movie.getTitle());
+            mBinding.tvOverview.setText(movie.getOverview());
 
             // Select image depending on orientation
             String url;
@@ -98,7 +93,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
                     .load(url)
                     .placeholder(placeHolderId)
                     .transform(transformation)
-                    .into(mPosterImage);
+                    .into(mBinding.ivPoster);
         }
 
         @Override

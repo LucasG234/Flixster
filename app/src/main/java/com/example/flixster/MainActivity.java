@@ -31,10 +31,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+        setContentView(R.layout.activity_main);
 
-        RecyclerView rvMovies = binding.rvMovies;
+        RecyclerView rvMovies = findViewById(R.id.rvMovies);
         mMovies = new ArrayList<>();
 
         // Create an adapter

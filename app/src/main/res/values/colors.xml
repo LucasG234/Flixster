@@ -4,6 +4,6 @@
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
     <color name="background">#323232</color>
-    <color name="text">#E0E0E0</color>
-    <color name="textSecondary">#858585</color>
+    <color name="text">#FFFFFF</color>
+    <color name="textSecondary">#C0C0C0</color>
 </resources>
