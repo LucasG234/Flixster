@@ -36,10 +36,10 @@ public class MovieDetailsActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         mContext = this;
-        TextView detailsTitle = binding.tvTitle;
-        TextView detailsOverview = binding.tvOverview;
+        TextView detailsTitle = binding.detailsTitle;
+        TextView detailsOverview = binding.detailsOverview;
         RatingBar detailsRatingBar = binding.rbVoteAverage;
-        ImageView videoPreview = binding.ivPoster;
+        ImageView videoPreview = binding.detailsPoster;
         ImageView youtubeIcon = binding.ytIcon;
 
         // Unwrap the movie passed in by the Intent
@@ -61,12 +61,21 @@ public class MovieDetailsActivity extends AppCompatActivity {
                 .placeholder(R.drawable.backdrop_placeholder)
                 .into(videoPreview);
 
-        // Make the API call to find the trailer URL
-        String apiUrl = String.format(getString(R.string.movies_videos_url),
-                movie.getMovieId(), getString(R.string.movies_api_key));
+        // Make the API call to find the trailer ID
+        if(movie.getTrailerId() == null) {
+            String apiUrl = String.format(getString(R.string.movies_videos_url),
+                    movie.getMovieId(), getString(R.string.movies_api_key));
 
-        AsyncHttpClient client = new AsyncHttpClient();
-        client.get(apiUrl, new MovieJsonHttpResponseHandler(movie, ytIcon));
+
+            AsyncHttpClient client = new AsyncHttpClient();
+            client.get(apiUrl, new MovieJsonHttpResponseHandler(movie, ytIcon));
+        }
+        // If trailer ID is already known, directly load the youtube icon
+        else {
+            Glide.with(mContext)
+                    .load(R.drawable.yt_icon_mono_light)
+                    .into(ytIcon);
+        }
 
         // Add a listener to launch the trailer
         videoPreview.setOnClickListener(new MovieClickListener(movie));

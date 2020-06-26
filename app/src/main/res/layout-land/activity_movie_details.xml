@@ -7,7 +7,7 @@
     tools:context=".MovieDetailsActivity">
 
     <ImageView
-        android:id="@+id/ivPoster"
+        android:id="@+id/detailsPoster"
         android:layout_width="315dp"
         android:layout_height="177dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -15,11 +15,11 @@
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
-        android:id="@+id/tvTitle"
+        android:id="@+id/detailsTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="36sp"
-        app:layout_constraintStart_toEndOf="@id/ivPoster"
+        app:layout_constraintStart_toEndOf="@id/detailsPoster"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Gabriel's Inferno" />
 
@@ -29,18 +29,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        app:layout_constraintStart_toEndOf="@id/ivPoster"
-        app:layout_constraintTop_toBottomOf="@id/tvTitle"
+        app:layout_constraintStart_toEndOf="@id/detailsPoster"
+        app:layout_constraintTop_toBottomOf="@id/detailsTitle"
         android:numStars="5"
         android:stepSize="0.5" />
 
     <TextView
-        android:id="@+id/tvOverview"
+        android:id="@+id/detailsOverview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivPoster"
+        app:layout_constraintTop_toBottomOf="@+id/itemPoster"
         android:textColor="@color/textSecondary"
         tools:text="An intriguing and sinful exploration of seduction, forbidden love, and redemption, Gabriel's Inferno is a captivating and wildly passionate tale of one man's escape from his own personal hell as he tries to earn the impossible--forgiveness and love." />
 
@@ -48,10 +48,10 @@
         android:id="@+id/ytIcon"
         android:layout_width="73dp"
         android:layout_height="51dp"
-        app:layout_constraintTop_toTopOf="@id/ivPoster"
-        app:layout_constraintStart_toStartOf="@id/ivPoster"
-        app:layout_constraintEnd_toEndOf="@id/ivPoster"
-        app:layout_constraintBottom_toBottomOf="@id/ivPoster"
+        app:layout_constraintTop_toTopOf="@id/detailsPoster"
+        app:layout_constraintStart_toStartOf="@id/detailsPoster"
+        app:layout_constraintEnd_toEndOf="@id/detailsPoster"
+        app:layout_constraintBottom_toBottomOf="@id/detailsPoster"
         tools:srcCompat="@tools:sample/avatars" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

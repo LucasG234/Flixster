@@ -34,7 +34,6 @@ public class Movie {
         overview = jsonObject.getString("overview");
         voteAverage = jsonObject.getDouble("vote_average");
         movieId = jsonObject.getInt("id");
-        trailerId = null;
     }
 
     public static List<Movie> fromJSONArray(JSONArray jsonArray) throws JSONException {

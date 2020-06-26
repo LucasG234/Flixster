@@ -74,8 +74,8 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
         }
 
         public void bind(Movie movie) {
-            mBinding.tvTitle.setText(movie.getTitle());
-            mBinding.tvOverview.setText(movie.getOverview());
+            mBinding.itemTitle.setText(movie.getTitle());
+            mBinding.itemOverview.setText(movie.getOverview());
 
             // Select image depending on orientation
             String url;
@@ -93,7 +93,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
                     .load(url)
                     .placeholder(placeHolderId)
                     .transform(transformation)
-                    .into(mBinding.ivPoster);
+                    .into(mBinding.itemPoster);
         }
 
         @Override

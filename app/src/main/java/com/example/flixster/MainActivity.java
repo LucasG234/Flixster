@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
         // Set a LayoutManager on the RecyclerView
         rvMovies.setLayoutManager(new LinearLayoutManager(this));
 
+        // Create HTTP request to fill in the movie information
         AsyncHttpClient client = new AsyncHttpClient();
         String url = String.format(getString(R.string.movies_info_url), getString(R.string.movies_api_key));
         client.get(url, new JsonHttpResponseHandler() {

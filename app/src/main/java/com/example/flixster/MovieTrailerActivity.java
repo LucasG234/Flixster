@@ -1,7 +1,5 @@
 package com.example.flixster;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.util.Log;
 
@@ -47,7 +45,7 @@ public class MovieTrailerActivity extends YouTubeBaseActivity {
             public void onInitializationFailure(YouTubePlayer.Provider provider,
                                                 YouTubeInitializationResult youTubeInitializationResult) {
                 // log the error
-                Log.e("MovieTrailerActivity", "Error initializing YouTube player");
+                Log.e(TAG, "Error initializing YouTube player");
             }
         });
     }
