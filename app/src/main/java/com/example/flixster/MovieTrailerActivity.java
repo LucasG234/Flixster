@@ -25,8 +25,10 @@ public class MovieTrailerActivity extends YouTubeBaseActivity {
 
         // Unwrap the movie passed in by the Intent
         Movie movie = Parcels.unwrap(getIntent().getParcelableExtra(Movie.class.getSimpleName()));
-        Log.d(TAG, String.format("Showing details for '%s'", movie.getTitle()));
-
+        if(movie == null) {
+            Log.e(TAG, "Parceled movie returned as null");
+            return;
+        }
         final String videoId = movie.getTrailerId();
 
         // resolve the player view from the layout

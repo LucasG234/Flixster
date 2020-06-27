@@ -22,6 +22,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.parceler.Parcels;
 
+import java.util.Locale;
+
 import okhttp3.Headers;
 
 public class MovieDetailsActivity extends AppCompatActivity {
@@ -44,14 +46,17 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
         // Unwrap the movie passed in by the Intent
         Movie movie = Parcels.unwrap(getIntent().getParcelableExtra(Movie.class.getSimpleName()));
-        Log.d(TAG, String.format("Showing details for '%s'", movie.getTitle()));
-
-        // Set the Views
-        detailsTitle.setText(movie.getTitle());
-        detailsOverview.setText(movie.getOverview());
-        float voteAverage = movie.getVoteAverage().floatValue();
-        detailsRatingBar.setRating(voteAverage > 0 ? voteAverage / 2 : 0);
-        initializeVideoPreview(videoPreview, youtubeIcon, movie);
+        if(movie != null) {
+            // Set the Views
+            detailsTitle.setText(movie.getTitle());
+            detailsOverview.setText(movie.getOverview());
+            float voteAverage = movie.getVoteAverage().floatValue();
+            detailsRatingBar.setRating(voteAverage > 0 ? voteAverage / 2 : 0);
+            initializeVideoPreview(videoPreview, youtubeIcon, movie);
+        }
+        else {
+            Log.e(TAG, "Parcelled movie was received as null");
+        }
     }
 
     private void initializeVideoPreview(ImageView videoPreview, ImageView ytIcon, Movie movie) {
@@ -63,7 +68,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
         // Make the API call to find the trailer ID
         if(movie.getTrailerId() == null) {
-            String apiUrl = String.format(getString(R.string.movies_videos_url),
+            String apiUrl = String.format(Locale.ENGLISH, "https://api.themoviedb.org/3/movie/%d/videos?api_key=%s",
                     movie.getMovieId(), getString(R.string.movies_api_key));
 
 
@@ -97,9 +102,6 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
                 mContext.startActivity(trailerIntent);
             }
-            else {
-                Log.d(TAG, "No trailer available");
-            }
         }
     }
 
@@ -115,7 +117,6 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
         @Override
         public void onSuccess(int statusCode, Headers headers, JSON json) {
-            Log.d(TAG, "onSuccess");
             JSONObject jsonObject = json.jsonObject;
             try {
                 JSONArray results = jsonObject.getJSONArray("results");
@@ -129,8 +130,6 @@ public class MovieDetailsActivity extends AppCompatActivity {
                     Glide.with(mContext)
                             .load(R.drawable.yt_icon_mono_light)
                             .into(mYoutubeIcon);
-
-                    Log.d(TAG, trailerId);
                 }
             } catch (JSONException e) {
                 Log.e(TAG, "JSON Exception", e);

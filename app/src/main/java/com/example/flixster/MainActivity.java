@@ -10,7 +10,6 @@ import android.util.Log;
 import com.codepath.asynchttpclient.AsyncHttpClient;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.example.flixster.adapters.MovieAdapter;
-import com.example.flixster.databinding.ActivityMainBinding;
 import com.example.flixster.models.Movie;
 
 import org.json.JSONArray;
@@ -45,19 +44,16 @@ public class MainActivity extends AppCompatActivity {
 
         // Create HTTP request to fill in the movie information
         AsyncHttpClient client = new AsyncHttpClient();
-        String url = String.format(getString(R.string.movies_info_url), getString(R.string.movies_api_key));
+        String url = String.format("https://api.themoviedb.org/3/movie/now_playing?api_key=%s", getString(R.string.movies_api_key));
         client.get(url, new JsonHttpResponseHandler() {
 
             @Override
             public void onSuccess(int statusCode, Headers headers, JSON json) {
-                Log.d(TAG, "onSuccess");
                 JSONObject jsonObject = json.jsonObject;
                 try {
                     JSONArray results = jsonObject.getJSONArray("results");
-                    Log.d(TAG, "Results: " + results.toString());
                     mMovies.addAll(Movie.fromJSONArray(results));
                     movieAdapter.notifyDataSetChanged();
-                    Log.d(TAG, "Movies: " + mMovies.size());
                 } catch (JSONException e) {
                     Log.e(TAG, "JSON Exception", e);
                     e.printStackTrace();

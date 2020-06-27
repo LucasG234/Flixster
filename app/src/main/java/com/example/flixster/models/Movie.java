@@ -72,6 +72,7 @@ public class Movie {
     public void setTrailerId(@Nullable String trailerId) {
         this.trailerId = trailerId;
     }
+    @Nullable
     public String getTrailerId() {
         return trailerId;
     }

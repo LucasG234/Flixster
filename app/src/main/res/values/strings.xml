@@ -1,5 +1,3 @@
 <resources>
     <string name="app_name">Flixster</string>
-    <string name="movies_info_url">https://api.themoviedb.org/3/movie/now_playing?api_key=%s</string>
-    <string name="movies_videos_url">https://api.themoviedb.org/3/movie/%d/videos?api_key=%s</string>
 </resources>
