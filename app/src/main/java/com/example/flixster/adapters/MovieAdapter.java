@@ -22,7 +22,7 @@ import java.util.List;
 
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
-public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> {
+public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder> {
 
     private Context mContext;
     private List<Movie> mMovies;
@@ -35,14 +35,14 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
     // Inflate a layout from XML and return a ViewHolder
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public MovieViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         ItemMovieBinding movieBinding = ItemMovieBinding.inflate(LayoutInflater.from(mContext), parent, false);
-        return new ViewHolder(movieBinding);
+        return new MovieViewHolder(movieBinding);
     }
 
     // Populate data into the view, through the ViewHolder
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MovieViewHolder holder, int position) {
         // Get the movie at the position
         Movie movie = mMovies.get(position);
         // Bind the movie data into the ViewHolder
@@ -56,11 +56,11 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
     }
 
     // Each instance represents one item in the list
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class MovieViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private ItemMovieBinding mBinding;
 
-        public ViewHolder(ItemMovieBinding itemBinding) {
+        public MovieViewHolder(ItemMovieBinding itemBinding) {
             super(itemBinding.getRoot());
             mBinding = itemBinding;
 

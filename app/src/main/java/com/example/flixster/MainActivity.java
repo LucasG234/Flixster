@@ -23,6 +23,9 @@ import okhttp3.Headers;
 
 public class MainActivity extends AppCompatActivity {
 
+    // This is a key for the Flixster JSON response
+    public static final String RESULTS_KEY = "results";
+    public static final String API_URL = "https://api.themoviedb.org/3/movie/now_playing?api_key=%s";
     public static final String TAG = "MainActivity";
 
     private List<Movie> mMovies;
@@ -44,25 +47,27 @@ public class MainActivity extends AppCompatActivity {
 
         // Create HTTP request to fill in the movie information
         AsyncHttpClient client = new AsyncHttpClient();
-        String url = String.format("https://api.themoviedb.org/3/movie/now_playing?api_key=%s", getString(R.string.movies_api_key));
+        String url = String.format(API_URL, getString(R.string.movies_api_key));
         client.get(url, new JsonHttpResponseHandler() {
 
             @Override
             public void onSuccess(int statusCode, Headers headers, JSON json) {
                 JSONObject jsonObject = json.jsonObject;
                 try {
-                    JSONArray results = jsonObject.getJSONArray("results");
+                    JSONArray results = jsonObject.getJSONArray(RESULTS_KEY);
+                    // Add movies to list from Flixster JSON call
                     mMovies.addAll(Movie.fromJSONArray(results));
-                    movieAdapter.notifyDataSetChanged();
                 } catch (JSONException e) {
                     Log.e(TAG, "JSON Exception", e);
                     e.printStackTrace();
                 }
+
+                movieAdapter.notifyDataSetChanged();
             }
 
             @Override
             public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
-                Log.d(TAG, "onFailure");
+                Log.d(TAG, "onFailure", throwable);
             }
         });
     }
